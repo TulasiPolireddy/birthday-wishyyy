@@ -1,248 +1,231 @@
-/* =========================================
-   BIRTHDAY WISH APP — THARUN ❤️
-   ========================================= */
+/* =========================
+   PAGE NAVIGATION
+========================= */
 
 let currentPage = 1;
-let kissCount = 0;
-
-
-/* =========================================
-   PAGE NAVIGATION
-   ========================================= */
 
 function nextPage() {
 
-    // Remove current page
-    const current = document.getElementById(`page${currentPage}`);
+    const current = document.getElementById("page" + currentPage);
 
     if (current) {
         current.classList.remove("active");
     }
 
-    // Move to next page
     currentPage++;
 
-    // Page 6 was deleted, so skip it
-    if (currentPage === 6) {
-        currentPage = 7;
-    }
-
-    // Show next page
-    const next = document.getElementById(`page${currentPage}`);
+    const next = document.getElementById("page" + currentPage);
 
     if (next) {
+
         next.classList.add("active");
+
+        /*
+         * FIX:
+         * Always move the new page back to the top.
+         */
+        next.scrollTop = 0;
+
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "instant"
+        });
     }
 
-    // Add sparkle effect
     createSparkles();
 
-    // Confetti on final page
-    if (currentPage === 11) {
+    if (currentPage === 10) {
         createConfetti();
     }
 }
 
 
-/* =========================================
-   FLOATING HEARTS
-   ========================================= */
+/* =========================
+   BACKGROUND EMOJIS
+========================= */
 
 function createFloatingHeart() {
 
-    const container = document.querySelector(".floating-hearts");
+    const container = document.getElementById("floatingContainer");
 
     if (!container) return;
+
+    const emojis = [
+        "❤️",
+        "💕",
+        "💗",
+        "💖",
+        "💓",
+        "💞",
+        "💋",
+        "😘",
+        "🥰",
+        "✨",
+        "🌸"
+    ];
 
     const heart = document.createElement("div");
 
     heart.className = "floating-heart";
 
-    const hearts = ["❤️", "💗", "💖", "💕", "💓"];
+    heart.innerText =
+        emojis[Math.floor(Math.random() * emojis.length)];
 
-    heart.innerHTML =
-        hearts[Math.floor(Math.random() * hearts.length)];
-
-    heart.style.left = Math.random() * 100 + "%";
-
-    heart.style.animationDuration =
-        (5 + Math.random() * 5) + "s";
+    /*
+     * IMPORTANT:
+     * Random position across the COMPLETE width.
+     */
+    heart.style.left = Math.random() * 100 + "vw";
 
     heart.style.fontSize =
-        (12 + Math.random() * 20) + "px";
+        (14 + Math.random() * 24) + "px";
+
+    const duration =
+        5 + Math.random() * 6;
+
+    heart.style.animationDuration =
+        duration + "s";
 
     container.appendChild(heart);
 
     setTimeout(() => {
         heart.remove();
-    }, 10000);
+    }, (duration + 1) * 1000);
 }
 
-setInterval(createFloatingHeart, 650);
+
+function createFloatingHearts() {
+
+    /*
+     * Create some immediately so the background
+     * doesn't start empty.
+     */
+    for (let i = 0; i < 18; i++) {
+
+        setTimeout(() => {
+            createFloatingHeart();
+        }, i * 200);
+
+    }
+
+    /*
+     * Keep creating emojis continuously.
+     */
+    setInterval(() => {
+        createFloatingHeart();
+    }, 450);
+}
 
 
-/* =========================================
+/* =========================
    SPARKLES
-   ========================================= */
+========================= */
 
 function createSparkles() {
 
-    const container =
-        document.querySelector(".sparkle-container");
+    const emojis = ["✨", "💗", "💕", "❤️"];
 
-    if (!container) return;
-
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 8; i++) {
 
         const sparkle = document.createElement("div");
 
-        sparkle.className = "sparkle";
+        sparkle.innerText =
+            emojis[Math.floor(Math.random() * emojis.length)];
 
-        sparkle.innerHTML = "✦";
+        sparkle.style.position = "fixed";
+        sparkle.style.left = Math.random() * 100 + "vw";
+        sparkle.style.top = Math.random() * 100 + "vh";
 
-        sparkle.style.left =
-            Math.random() * 100 + "%";
+        sparkle.style.fontSize =
+            (12 + Math.random() * 15) + "px";
 
-        sparkle.style.top =
-            Math.random() * 100 + "%";
+        sparkle.style.pointerEvents = "none";
+        sparkle.style.zIndex = "5";
 
-        sparkle.style.animationDelay =
-            Math.random() * 0.5 + "s";
+        sparkle.style.animation =
+            "heartbeat 1s ease forwards";
 
-        container.appendChild(sparkle);
+        document.body.appendChild(sparkle);
 
         setTimeout(() => {
             sparkle.remove();
-        }, 1500);
+        }, 1000);
     }
 }
 
 
-/* =========================================
-   HEART MINI GAME
-   ========================================= */
+/* =========================
+   HEART GAME
+========================= */
 
-const messages = {
+let heartAlreadyPicked = false;
 
-    1:
-        "You found it! Apparently you have excellent boyfriend skills. 😂❤️",
+function pickHeart(button) {
 
-    2:
-        "Wrong one... but I'll allow it because you're cute. 😌💗",
+    if (heartAlreadyPicked) return;
 
-    3:
-        "You found the secret! The secret is... I love you. Obviously. 😂❤️"
+    heartAlreadyPicked = true;
 
-};
-
-
-function chooseHeart(choice) {
+    button.classList.add("selected");
 
     const result =
         document.getElementById("heartResult");
 
-    const nextButton =
+    result.innerHTML =
+        "You found it! ❤️ <br> Just like you found your way into my heart. 🥹";
+
+    const next =
         document.getElementById("heartNext");
 
-    if (!result || !nextButton) return;
+    next.classList.remove("hidden");
 
-    result.innerHTML =
-        messages[choice];
+    const hearts =
+        document.querySelectorAll(".game-heart");
 
-    nextButton.style.display =
-        "inline-block";
-
-    createSparkles();
+    hearts.forEach(heart => {
+        heart.disabled = true;
+    });
 }
 
 
-/* =========================================
-   KISS DELIVERY 💋
-   ========================================= */
+/* =========================
+   KISS DELIVERY
+========================= */
 
 function sendKiss() {
-
-    kissCount++;
-
-    const count =
-        document.getElementById("kissCount");
-
-    if (count) {
-        count.textContent = kissCount;
-    }
-
-    const button =
-        document.getElementById("kissButton");
-
-    if (!button) return;
-
-    /*
-       Kiss that pops directly above
-       the button that was pressed
-    */
-
-    const kiss =
-        document.createElement("div");
-
-    kiss.className = "kiss-pop";
-
-    kiss.innerHTML = "💋";
-
-    button.parentElement.appendChild(kiss);
-
-
-    /* Extra flying kisses */
 
     const area =
         document.getElementById("kissArea");
 
-    if (area) {
+    if (!area) return;
 
-        for (let i = 0; i < 3; i++) {
+    const kiss =
+        document.createElement("div");
 
-            const flyingKiss =
-                document.createElement("div");
+    kiss.className = "kiss";
 
-            flyingKiss.className =
-                "kiss-fly";
+    kiss.innerText = "💋";
 
-            flyingKiss.innerHTML =
-                Math.random() > 0.5
-                    ? "💋"
-                    : "❤️";
+    kiss.style.left =
+        (20 + Math.random() * 60) + "%";
 
-            flyingKiss.style.left =
-                Math.random() * 90 + "%";
+    kiss.style.top =
+        (40 + Math.random() * 30) + "%";
 
-            flyingKiss.style.bottom =
-                Math.random() * 30 + "px";
-
-            flyingKiss.style.animationDelay =
-                Math.random() * 0.2 + "s";
-
-            area.appendChild(flyingKiss);
-
-            setTimeout(() => {
-                flyingKiss.remove();
-            }, 2000);
-        }
-    }
-
-
-    /* Remove main kiss */
+    area.appendChild(kiss);
 
     setTimeout(() => {
         kiss.remove();
-    }, 1300);
+    }, 1200);
 }
 
 
-/* =========================================
-   GIFT BOX 🎁
-   ========================================= */
+/* =========================
+   GIFT
+========================= */
 
 let giftOpened = false;
-
 
 function openGift() {
 
@@ -251,281 +234,107 @@ function openGift() {
     giftOpened = true;
 
     const gift =
-        document.querySelector(".gift");
+        document.getElementById("gift");
+
+    gift.classList.add("opened");
 
     const message =
         document.getElementById("giftMessage");
 
-    const giftButton =
-        document.getElementById("giftButton");
+    message.innerHTML =
+        "Surprise! 🎁❤️ <br> The actual gift is having me in your life. 😂";
 
-    const nextButton =
+    const next =
         document.getElementById("giftNext");
 
-
-    if (gift) {
-        gift.classList.add("opened");
-    }
-
-    if (message) {
-
-        message.innerHTML =
-            "Surprise! 🎁 You thought I'd actually let your birthday pass without one? 😂❤️";
-    }
-
-    if (giftButton) {
-        giftButton.style.display = "none";
-    }
-
-    if (nextButton) {
-        nextButton.style.display = "inline-block";
-    }
-
-    createConfetti();
+    next.classList.remove("hidden");
 }
 
 
-/* =========================================
-   BIRTHDAY CAKE 🎂
-   ========================================= */
+/* =========================
+   CAKE
+========================= */
 
-let candlesBlown = false;
+let cakeBlown = false;
 
+function blowCake() {
 
-function blowCandles() {
+    if (cakeBlown) return;
 
-    if (candlesBlown) return;
+    cakeBlown = true;
 
-    candlesBlown = true;
+    const cake =
+        document.getElementById("cake");
 
+    cake.classList.add("blown");
 
-    const flames =
-        document.querySelectorAll(".flame");
-
-    flames.forEach(flame => {
-
-        flame.style.opacity = "0";
-
-        flame.style.transform =
-            "scale(0)";
-
-    });
-
-
-    const wish =
+    const message =
         document.getElementById("wishMessage");
 
-    if (wish) {
+    message.innerHTML =
+        "Wish made! ✨❤️ <br> I hope every good thing finds you.";
 
-        wish.innerHTML =
-            "Make your biggest wish... ✨ And yes, I hope I am part of it. 😂❤️";
-    }
-
-
-    const nextButton =
+    const next =
         document.getElementById("cakeNext");
 
-    if (nextButton) {
-        nextButton.style.display = "inline-block";
-    }
-
-    createConfetti();
+    next.classList.remove("hidden");
 }
 
 
-/* =========================================
-   CONFETTI 🎉
-   ========================================= */
+/* =========================
+   CONFETTI
+========================= */
 
 function createConfetti() {
 
-    const pieces = 80;
+    const emojis = [
+        "❤️",
+        "💕",
+        "✨",
+        "🎉",
+        "🥳",
+        "💋",
+        "🎂"
+    ];
 
-    for (let i = 0; i < pieces; i++) {
+    for (let i = 0; i < 45; i++) {
 
         const confetti =
             document.createElement("div");
 
-        confetti.className =
-            "confetti";
+        confetti.className = "confetti";
 
-        confetti.innerHTML =
-            Math.random() > 0.5
-                ? "❤️"
-                : "✦";
+        confetti.innerText =
+            emojis[Math.floor(Math.random() * emojis.length)];
 
         confetti.style.left =
             Math.random() * 100 + "vw";
 
+        confetti.style.fontSize =
+            (14 + Math.random() * 20) + "px";
+
         confetti.style.animationDuration =
-            (2 + Math.random() * 3) + "s";
+            (3 + Math.random() * 4) + "s";
 
         confetti.style.animationDelay =
-            Math.random() * 0.5 + "s";
+            Math.random() * 2 + "s";
 
         document.body.appendChild(confetti);
 
         setTimeout(() => {
             confetti.remove();
-        }, 5000);
+        }, 8000);
     }
 }
 
 
-/* =========================================
-   MUSIC BUTTON 🎵
-   ========================================= */
+/* =========================
+   START
+========================= */
 
-function toggleMusic() {
+document.addEventListener("DOMContentLoaded", () => {
 
-    const button =
-        document.getElementById("musicButton");
-
-    if (!button) return;
-
-    if (button.innerHTML.includes("🎵")) {
-
-        button.innerHTML = "🔊";
-
-    } else {
-
-        button.innerHTML = "🎵";
-    }
-}
-
-
-/* =========================================
-   RESTART APP 🔄
-   ========================================= */
-
-function restartApp() {
-
-    /* Reset page */
-
-    document.querySelectorAll(".page")
-        .forEach(page => {
-
-            page.classList.remove("active");
-
-        });
-
-
-    currentPage = 1;
-
-    const firstPage =
-        document.getElementById("page1");
-
-    if (firstPage) {
-        firstPage.classList.add("active");
-    }
-
-
-    /* Reset kisses */
-
-    kissCount = 0;
-
-    const kissCounter =
-        document.getElementById("kissCount");
-
-    if (kissCounter) {
-        kissCounter.textContent = "0";
-    }
-
-
-    /* Reset gift */
-
-    giftOpened = false;
-
-    const gift =
-        document.querySelector(".gift");
-
-    if (gift) {
-        gift.classList.remove("opened");
-    }
-
-
-    const giftMessage =
-        document.getElementById("giftMessage");
-
-    if (giftMessage) {
-
-        giftMessage.innerHTML =
-            "Go on... click the suspiciously cute box. 😂";
-    }
-
-
-    const giftButton =
-        document.getElementById("giftButton");
-
-    const giftNext =
-        document.getElementById("giftNext");
-
-    if (giftButton) {
-        giftButton.style.display = "inline-block";
-    }
-
-    if (giftNext) {
-        giftNext.style.display = "none";
-    }
-
-
-    /* Reset candles */
-
-    candlesBlown = false;
-
-    document.querySelectorAll(".flame")
-        .forEach(flame => {
-
-            flame.style.opacity = "1";
-
-            flame.style.transform =
-                "scale(1)";
-
-        });
-
-
-    const wish =
-        document.getElementById("wishMessage");
-
-    if (wish) {
-        wish.innerHTML = "";
-    }
-
-
-    const cakeNext =
-        document.getElementById("cakeNext");
-
-    if (cakeNext) {
-        cakeNext.style.display = "none";
-    }
-
-
-    /* Reset heart game */
-
-    const heartResult =
-        document.getElementById("heartResult");
-
-    const heartNext =
-        document.getElementById("heartNext");
-
-    if (heartResult) {
-        heartResult.innerHTML = "";
-    }
-
-    if (heartNext) {
-        heartNext.style.display = "none";
-    }
-
-
-    createSparkles();
-}
-
-
-/* =========================================
-   INITIAL EFFECT
-   ========================================= */
-
-window.addEventListener("load", () => {
+    createFloatingHearts();
 
     createSparkles();
 
