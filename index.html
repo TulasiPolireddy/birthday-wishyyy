@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fredoka:wght@400;600;700&family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Confetti library -->
+  <!-- Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
   <!-- External Stylesheet -->
@@ -45,7 +45,7 @@
       <div style="font-size: 65px; margin: 15px 0;">🎉✨🎈</div>
       <p>The party poppers went off because someone undeniably special was born on this day!</p>
       <button class="btn-cute" onclick="nextScreen()">Let's Begin 🚀</button>
-      <div class="progress-bar"><div class="progress-fill" style="width: 20%;"></div></div>
+      <div class="progress-bar"><div class="progress-fill" style="width: 22%;"></div></div>
     </div>
 
     <!-- 3. HAPPY BIRTHDAY ANIMATION -->
@@ -59,7 +59,7 @@
         <button class="btn-nav-prev" onclick="prevScreen()">← Back</button>
         <button class="btn-cute" onclick="nextScreen()">Read Message 💌</button>
       </div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 30%;"></div></div>
+      <div class="progress-bar"><div class="progress-fill" style="width: 33%;"></div></div>
     </div>
 
     <!-- 4. BIRTHDAY MESSAGE -->
@@ -71,58 +71,44 @@
       </p>
       <div class="nav-buttons">
         <button class="btn-nav-prev" onclick="prevScreen()">← Back</button>
-        <button class="btn-cute" onclick="nextScreen()">Our Memories 📸</button>
+        <button class="btn-cute" onclick="nextScreen()">A Quick Question ❓</button>
       </div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 40%;"></div></div>
+      <div class="progress-bar"><div class="progress-fill" style="width: 44%;"></div></div>
     </div>
 
-    <!-- 5. OUR MEMORIES -->
+    <!-- 5. ARE YOU LOVING ME? (RUNAWAY YES + DUCK HELPER) -->
     <div class="screen" id="screen-5">
-      <span class="badge-tag">📸 Golden Moments</span>
-      <h1 class="title-cute">Snapshots of Us</h1>
-      <div class="polaroid-grid">
-        <div class="polaroid" style="--rot: -4deg;">
-          <div class="polaroid-img">🌟</div>
-          <div class="polaroid-caption">Best Day Ever</div>
+      <span class="badge-tag">🦆 Honest Answer Time 🦆</span>
+      <h1 class="title-magic">Are you loving me? 🥺💖</h1>
+      <p id="love-game-hint">Choose wisely... be 100% honest! 😉</p>
+
+      <!-- Interactive Play Area -->
+      <div class="love-game-area" id="gameArea">
+        
+        <!-- Animated Duck Helper -->
+        <div class="duck-helper" id="duckHelper">
+          <div class="duck-bubble" id="duckBubble">Quack! It's all yours now, press it! 🥰</div>
+          <div class="duck-avatar">🦆</div>
         </div>
-        <div class="polaroid" style="--rot: 4deg;">
-          <div class="polaroid-img">🍦</div>
-          <div class="polaroid-caption">Sweet Cravings</div>
-        </div>
-        <div class="polaroid" style="--rot: 3deg;">
-          <div class="polaroid-img">🏖️</div>
-          <div class="polaroid-caption">Adventures</div>
-        </div>
-        <div class="polaroid" style="--rot: -3deg;">
-          <div class="polaroid-img">💫</div>
-          <div class="polaroid-caption">Magic Moments</div>
-        </div>
+
+        <!-- Buttons -->
+        <button class="btn-love btn-love-yes" id="btnYes" onmouseover="dodgeYesButton()" ontouchstart="dodgeYesButton(event)" onclick="handleYesClick()">
+          YES! 🥰
+        </button>
+        <button class="btn-love btn-love-no" id="btnNo" onclick="handleNoClick()">
+          No 🙈
+        </button>
       </div>
-      <div class="nav-buttons">
+
+      <div class="nav-buttons" style="margin-top: 20px;">
         <button class="btn-nav-prev" onclick="prevScreen()">← Back</button>
-        <button class="btn-cute" onclick="nextScreen()">Funny Moments 😂</button>
+        <button class="btn-cute" id="btn-after-love" style="display:none;" onclick="nextScreen()">What I Love 💗</button>
       </div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 50%;"></div></div>
+      <div class="progress-bar"><div class="progress-fill" style="width: 55%;"></div></div>
     </div>
 
-    <!-- 6. FUNNY MOMENTS -->
+    <!-- 6. THINGS I LOVE ABOUT YOU -->
     <div class="screen" id="screen-6">
-      <span class="badge-tag">😂 Laughs & Chaos</span>
-      <h1 class="title-magic">You Being Silly 🤪</h1>
-      <div class="funny-cards">
-        <div class="funny-card"><span>🍕</span><div><strong>Food Theft:</strong> Saying "I'm not hungry" then eating half my snacks!</div></div>
-        <div class="funny-card"><span>💃</span><div><strong>Random Dances:</strong> Busting out dramatic dance moves anywhere.</div></div>
-        <div class="funny-card"><span>😴</span><div><strong>Sleep Mode:</strong> Falling asleep 2 minutes after saying "I'm wide awake".</div></div>
-      </div>
-      <div class="nav-buttons">
-        <button class="btn-nav-prev" onclick="prevScreen()">← Back</button>
-        <button class="btn-cute" onclick="nextScreen()">What I Love 💗</button>
-      </div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 65%;"></div></div>
-    </div>
-
-    <!-- 7. THINGS I LOVE ABOUT YOU -->
-    <div class="screen" id="screen-7">
       <span class="badge-tag">💗 Pure Appreciation</span>
       <h1 class="title-magic">Reasons You're Special</h1>
       <p style="font-size: 0.9rem;">(Tap the hearts to pop love!)</p>
@@ -138,11 +124,11 @@
         <button class="btn-nav-prev" onclick="prevScreen()">← Back</button>
         <button class="btn-cute" onclick="nextScreen()">Blow Candles 🎂</button>
       </div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 78%;"></div></div>
+      <div class="progress-bar"><div class="progress-fill" style="width: 66%;"></div></div>
     </div>
 
-    <!-- 8. BLOW THE CANDLES -->
-    <div class="screen" id="screen-8">
+    <!-- 7. BLOW THE CANDLES -->
+    <div class="screen" id="screen-7">
       <span class="badge-tag">🎂 Make a Wish</span>
       <h1 class="title-magic">Blow the Candles!</h1>
       <p id="candle-text">✨ Make a wish and tap the cake to blow out the flames! ✨</p>
@@ -159,11 +145,11 @@
         <button class="btn-nav-prev" onclick="prevScreen()">← Back</button>
         <button class="btn-cute" id="btn-after-candles" style="display:none;" onclick="nextScreen()">Secret Letter 💌</button>
       </div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 88%;"></div></div>
+      <div class="progress-bar"><div class="progress-fill" style="width: 77%;"></div></div>
     </div>
 
-    <!-- 9. SECRET MESSAGE -->
-    <div class="screen" id="screen-9">
+    <!-- 8. SECRET MESSAGE -->
+    <div class="screen" id="screen-8">
       <span class="badge-tag">💌 Top Secret</span>
       <h1 class="title-magic">A Letter For You</h1>
       <p>Tap the wax-sealed envelope to read the message:</p>
@@ -175,11 +161,11 @@
         <button class="btn-nav-prev" onclick="prevScreen()">← Back</button>
         <button class="btn-cute" id="btn-final" style="display:none;" onclick="celebrateGrandFinale()">Grand Finale 🎊</button>
       </div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 95%;"></div></div>
+      <div class="progress-bar"><div class="progress-fill" style="width: 88%;"></div></div>
     </div>
 
-    <!-- 10. FINAL CONFETTI -->
-    <div class="screen" id="screen-10">
+    <!-- 9. FINAL CONFETTI -->
+    <div class="screen" id="screen-9">
       <span class="badge-tag">🎊 Celebrate Forever 🎊</span>
       <h1 class="title-magic" style="font-size: 2.6rem;">HAPPY BIRTHDAY! 💖</h1>
       <div style="font-size: 65px; margin: 12px 0;">👑✨🎂🎈🎁</div>
@@ -205,7 +191,7 @@
       <label><strong>2. Birthday Message (Page 4):</strong></label>
       <textarea id="inputMainMsg" rows="4" placeholder="Write your heartfelt birthday message here..."></textarea>
 
-      <label><strong>3. Secret Letter Note (Page 9):</strong></label>
+      <label><strong>3. Secret Letter Note (Page 8):</strong></label>
       <textarea id="inputSecretMsg" rows="5" placeholder="Write your private secret letter here..."></textarea>
 
       <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px;">
