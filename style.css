@@ -5,12 +5,14 @@
 }
 
 :root {
-    --bg: #100b12;
-    --card: #1b121b;
-    --pink: #ff7aa8;
-    --light-pink: #ffd4e2;
+    --bg: #0e090d;
+    --bg2: #1a0d16;
+    --card: #1b1119;
+    --pink: #ff78a8;
+    --pink-light: #ffd5e3;
     --white: #fff8fb;
-    --muted: #c9b9c2;
+    --muted: #c8b7c0;
+    --border: #34212c;
 }
 
 body {
@@ -21,7 +23,9 @@ body {
 }
 
 
-/* ================= PAGE ================= */
+/* =========================================
+   PAGE
+========================================= */
 
 .page {
     position: fixed;
@@ -38,26 +42,30 @@ body {
     opacity: 0;
     visibility: hidden;
 
-    transform: scale(1.04);
+    transform: translateY(30px) scale(.97);
 
     transition:
-        opacity 0.7s ease,
-        transform 0.7s ease,
-        visibility 0.7s;
+        opacity .8s ease,
+        transform .8s cubic-bezier(.22, 1, .36, 1),
+        visibility .8s;
 }
 
 .page.active {
     opacity: 1;
     visibility: visible;
-    transform: scale(1);
+
+    transform: translateY(0) scale(1);
 }
 
 
-/* ================= CONTENT ================= */
+/* =========================================
+   CONTENT
+========================================= */
 
 .content {
-    width: min(850px, 100%);
-    max-height: 95vh;
+    width: min(900px, 100%);
+    max-height: 94vh;
+
     overflow-y: auto;
 
     scrollbar-width: none;
@@ -73,173 +81,193 @@ h2 {
 }
 
 h1 {
-    font-size: clamp(45px, 8vw, 85px);
-    line-height: 1.05;
+    font-size: clamp(48px, 9vw, 90px);
+    line-height: 1.02;
 
     margin-bottom: 25px;
 }
 
+h1 span {
+    color: var(--pink);
+}
+
 h2 {
-    font-size: clamp(32px, 5vw, 55px);
+    font-size: clamp(34px, 6vw, 58px);
     margin-bottom: 25px;
 }
 
 .small-text {
     color: var(--pink);
-    letter-spacing: 3px;
+
     text-transform: uppercase;
-    font-size: 12px;
-    margin-bottom: 20px;
+
+    letter-spacing: 4px;
+
+    font-size: 11px;
+
+    margin-bottom: 18px;
 }
 
 .subtitle {
     color: var(--muted);
+
     font-size: 17px;
+
     line-height: 1.8;
 }
 
 .message {
     max-width: 650px;
+
     margin: auto;
 
     color: var(--muted);
+
     line-height: 1.9;
+
     font-size: 16px;
 }
 
 
-/* ================= BUTTON ================= */
+/* =========================================
+   BUTTONS
+========================================= */
 
 button {
+    border: none;
+
+    padding: 14px 28px;
+
     margin-top: 30px;
 
-    padding: 14px 27px;
-
-    border: none;
     border-radius: 50px;
 
     background: var(--pink);
-    color: #180d13;
+
+    color: #190c13;
 
     font-family: "DM Sans", sans-serif;
+
     font-weight: 700;
 
     cursor: pointer;
 
-    transition: 0.3s ease;
+    transition: .35s ease;
 
-    box-shadow: 0 10px 35px rgba(255, 122, 168, 0.2);
+    box-shadow:
+        0 10px 35px rgba(255, 120, 168, .15);
 }
 
 button:hover {
     transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 15px 40px rgba(255, 122, 168, 0.35);
+
+    box-shadow:
+        0 15px 45px rgba(255, 120, 168, .35);
 }
 
 button:active {
-    transform: scale(0.96);
+    transform: scale(.94);
 }
 
 button.secondary {
     display: block;
+
     margin-left: auto;
     margin-right: auto;
 
     background: transparent;
-    border: 1px solid #4b3541;
-    color: var(--light-pink);
+
+    color: var(--pink-light);
+
+    border: 1px solid #4a3040;
+
+    box-shadow: none;
 }
 
 
-/* ================= CARDS ================= */
+/* =========================================
+   MUSIC
+========================================= */
 
-.cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
+.music-btn {
+    position: fixed;
 
-    margin: 30px auto;
+    top: 20px;
+    right: 20px;
 
-    max-width: 800px;
+    z-index: 200;
+
+    width: 45px;
+    height: 45px;
+
+    padding: 0;
+
+    margin: 0;
+
+    border: 1px solid var(--border);
+
+    background: rgba(30, 17, 27, .8);
+
+    color: white;
+
+    backdrop-filter: blur(10px);
 }
 
-.card {
-    background: var(--card);
 
-    border: 1px solid #2c2029;
+/* =========================================
+   ENTRANCE
+========================================= */
 
-    border-radius: 22px;
-
-    padding: 25px;
-
-    text-align: left;
-
-    transition: 0.3s;
+.entrance {
+    animation: entrance .9s ease;
 }
 
-.card:hover {
-    transform: translateY(-7px);
-    border-color: #75445b;
+@keyframes entrance {
+
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.card span {
+.tiny-heart {
+    font-size: 70px;
+
     color: var(--pink);
-    font-size: 12px;
+
+    animation: heartbeat 1.3s infinite;
 }
 
-.card h3 {
-    margin: 15px 0 10px;
-}
+@keyframes heartbeat {
 
-.card p {
-    color: var(--muted);
-    line-height: 1.6;
-    font-size: 14px;
-}
+    0%,
+    100% {
+        transform: scale(1);
+    }
 
-
-/* ================= LOVE LIST ================= */
-
-.love-list {
-    max-width: 650px;
-    margin: auto;
-}
-
-.love-list div {
-    background: var(--card);
-
-    margin: 12px 0;
-
-    padding: 17px 22px;
-
-    border-radius: 15px;
-
-    text-align: left;
-
-    color: var(--light-pink);
-
-    border: 1px solid #2c2029;
-
-    transition: 0.3s;
-}
-
-.love-list div:hover {
-    transform: translateX(8px);
-}
-
-.bottom-note {
-    margin-top: 25px;
-    color: var(--pink);
+    50% {
+        transform: scale(1.18);
+    }
 }
 
 
-/* ================= EMOJI ================= */
+/* =========================================
+   ORBIT HEART
+========================================= */
 
-.emoji-big {
-    font-size: 75px;
-    margin-bottom: 15px;
+.orbit-heart {
+    font-size: 70px;
 
-    animation: floating 2s infinite ease-in-out;
+    margin-bottom: 20px;
+
+    animation:
+        floating 2s ease-in-out infinite,
+        heartbeat 1.5s infinite;
 }
 
 @keyframes floating {
@@ -250,63 +278,469 @@ button.secondary {
     }
 
     50% {
-        transform: translateY(-10px);
+        transform: translateY(-12px);
     }
 }
 
 
-/* ================= KISSES ================= */
+/* =========================================
+   CARDS
+========================================= */
 
-#kissArea {
-    height: 120px;
-    position: relative;
-    overflow: hidden;
+.cards {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+
+    max-width: 850px;
+
+    margin: 30px auto;
 }
 
-.kiss {
+.card {
+    padding: 26px;
+
+    text-align: left;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.035),
+            rgba(255,255,255,.01)
+        );
+
+    border: 1px solid var(--border);
+
+    border-radius: 22px;
+
+    transition: .4s;
+}
+
+.card:hover {
+    transform:
+        translateY(-9px)
+        rotate(-1deg);
+
+    border-color: #74445b;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.3);
+}
+
+.card span {
+    color: var(--pink);
+
+    font-size: 12px;
+}
+
+.card h3 {
+    margin: 15px 0 10px;
+}
+
+.card p {
+    color: var(--muted);
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   LOVE LIST
+========================================= */
+
+.love-list {
+    max-width: 700px;
+
+    margin: auto;
+}
+
+.love-list div {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    padding: 17px 22px;
+
+    margin: 11px 0;
+
+    color: var(--pink-light);
+
+    text-align: left;
+
+    transition: .3s;
+}
+
+.love-list div:hover {
+    transform: translateX(10px);
+
+    border-color: #74445b;
+}
+
+
+/* =========================================
+   AMMA LETTER
+========================================= */
+
+.letter-page {
+    perspective: 1000px;
+}
+
+.letter-icon {
+    font-size: 65px;
+
+    animation: floating 2s infinite ease-in-out;
+}
+
+.letter {
+    max-width: 650px;
+
+    margin: 30px auto;
+
+    padding: 35px;
+
+    text-align: left;
+
+    background:
+        linear-gradient(
+            145deg,
+            #21141d,
+            #170d14
+        );
+
+    border: 1px solid #44303b;
+
+    border-radius: 5px;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.35);
+
+    position: relative;
+
+    transform: rotate(-.5deg);
+
+    animation: letterAppear .8s ease;
+}
+
+@keyframes letterAppear {
+
+    from {
+        opacity: 0;
+        transform:
+            rotate(-3deg)
+            translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            rotate(-.5deg)
+            translateY(0);
+    }
+}
+
+.letter-heading {
+    font-family: "Playfair Display", serif;
+
+    font-size: 22px;
+
+    color: var(--pink-light);
+
+    margin-bottom: 20px;
+}
+
+.amma-message {
+    color: var(--muted);
+
+    line-height: 1.9;
+
+    white-space: pre-line;
+}
+
+.placeholder {
+    color: #8d727e;
+
+    font-style: italic;
+}
+
+.letter-sign {
+    margin-top: 25px;
+
+    color: var(--pink-light);
+
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   MEMORY GRID
+========================================= */
+
+.memory-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 15px;
+
+    max-width: 850px;
+
+    margin: 30px auto;
+}
+
+.memory {
+    min-height: 170px;
+
+    padding: 25px 15px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #21151d,
+            #150d13
+        );
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    transition: .4s;
+}
+
+.memory:hover {
+    transform:
+        translateY(-8px)
+        rotate(2deg);
+
+    border-color: #74445b;
+}
+
+.memory span {
+    font-size: 48px;
+
+    margin-bottom: 15px;
+}
+
+.memory p {
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+.memory-number {
     position: absolute;
 
-    font-size: 35px;
+    opacity: .3;
 
-    animation: kissFly 1.5s forwards ease-out;
+    font-size: 11px;
 }
 
-@keyframes kissFly {
+.hint {
+    color: #8d727e;
+
+    font-size: 12px;
+}
+
+
+/* =========================================
+   HEART GAME
+========================================= */
+
+.heart-choice {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 25px;
+
+    margin-top: 35px;
+}
+
+.heart-choice button {
+    margin: 0;
+
+    padding: 25px;
+
+    font-size: 42px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    box-shadow: none;
+}
+
+.heart-choice button:hover {
+    transform:
+        translateY(-8px)
+        scale(1.1);
+}
+
+#heartResult {
+    min-height: 30px;
+
+    margin-top: 30px;
+
+    color: var(--pink-light);
+
+    font-size: 17px;
+}
+
+
+/* =========================================
+   KISS SERVICE
+========================================= */
+
+#kissArea {
+    position: relative;
+
+    width: 100%;
+
+    height: 130px;
+
+    margin-top: 15px;
+
+    pointer-events: none;
+}
+
+.kiss-button-wrapper {
+    position: relative;
+
+    display: inline-block;
+}
+
+#kissButton {
+    position: relative;
+
+    z-index: 3;
+}
+
+.kiss-pop {
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 75px;
+
+    transform:
+        translateX(-50%)
+        scale(.2);
+
+    font-size: 45px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 5;
+
+    animation:
+        kissPop 1.2s cubic-bezier(.22,1,.36,1)
+        forwards;
+}
+
+@keyframes kissPop {
 
     0% {
-        transform: translateY(60px) scale(0.5);
         opacity: 0;
+
+        transform:
+            translateX(-50%)
+            translateY(20px)
+            scale(.2);
     }
 
     30% {
         opacity: 1;
+
+        transform:
+            translateX(-50%)
+            translateY(-5px)
+            scale(1.25);
     }
 
     100% {
-        transform: translateY(-100px) rotate(20deg) scale(1.3);
         opacity: 0;
+
+        transform:
+            translateX(-50%)
+            translateY(-100px)
+            scale(1);
+    }
+}
+
+.kiss-fly {
+    position: absolute;
+
+    font-size: 30px;
+
+    animation:
+        kissFly 1.7s ease-out forwards;
+}
+
+@keyframes kissFly {
+
+    from {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(.5);
+    }
+
+    to {
+        opacity: 0;
+
+        transform:
+            translateY(-120px)
+            rotate(25deg)
+            scale(1.3);
     }
 }
 
 .kiss-count {
-    margin-top: 15px;
     color: var(--muted);
+
+    margin-top: 12px;
+}
+
+.kiss-note {
+    margin-top: 10px;
+
+    color: #987f8a;
+
+    font-size: 12px;
 }
 
 
-/* ================= GIFT ================= */
+/* =========================================
+   GIFT
+========================================= */
 
 .gift {
     position: relative;
 
-    width: 170px;
-    height: 160px;
+    width: 180px;
+    height: 180px;
 
-    margin: 30px auto;
+    margin: 25px auto;
 
     cursor: pointer;
 
-    transition: 0.3s;
+    transition: .4s;
 }
 
 .gift:hover {
@@ -318,54 +752,87 @@ button.secondary {
 
     bottom: 0;
 
-    width: 170px;
-    height: 120px;
+    width: 180px;
+    height: 125px;
 
     background: #b84d78;
 
-    border-radius: 5px;
+    border-radius: 6px;
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,.3);
 }
 
 .gift-lid {
     position: absolute;
 
     top: 25px;
-
     left: -8px;
 
-    width: 186px;
-    height: 35px;
+    width: 196px;
+    height: 38px;
 
-    background: #e2779d;
+    background: #e2789e;
 
-    border-radius: 5px;
+    border-radius: 6px;
 
-    z-index: 2;
+    z-index: 3;
+
+    transition: .7s cubic-bezier(.22,1,.36,1);
 }
 
 .ribbon {
     position: absolute;
 
-    left: 70px;
+    left: 75px;
 
     width: 30px;
-    height: 120px;
+    height: 125px;
 
     background: #ffd4e2;
 }
 
+.gift-bow-left,
+.gift-bow-right {
+    position: absolute;
+
+    top: -28px;
+
+    width: 45px;
+    height: 30px;
+
+    border-radius: 50%;
+
+    background: #ffd4e2;
+}
+
+.gift-bow-left {
+    left: 60px;
+
+    transform: rotate(-25deg);
+}
+
+.gift-bow-right {
+    left: 92px;
+
+    transform: rotate(25deg);
+}
+
 .gift.open .gift-lid {
-    transform: translateY(-50px) rotate(-8deg);
-    transition: 0.7s;
+    transform:
+        translateY(-75px)
+        rotate(-12deg);
 }
 
 
-/* ================= CAKE ================= */
+/* =========================================
+   CAKE
+========================================= */
 
 .cake {
     position: relative;
 
-    width: 260px;
+    width: 280px;
     height: 220px;
 
     margin: 20px auto;
@@ -386,82 +853,80 @@ button.secondary {
 .cake-bottom {
     bottom: 10px;
 
-    width: 240px;
+    width: 250px;
     height: 70px;
 
-    background: #b84d78;
+    background: #a9446d;
 }
 
 .cake-middle {
     bottom: 70px;
 
-    width: 210px;
+    width: 220px;
     height: 60px;
 
-    background: #d66d95;
+    background: #d56591;
 }
 
 .cake-top {
     bottom: 120px;
 
-    width: 180px;
+    width: 190px;
     height: 55px;
 
-    background: #f3a6bf;
+    background: #f0a1bc;
 }
-
-
-/* candles */
 
 .candle {
     position: absolute;
 
     bottom: 175px;
 
-    width: 14px;
+    width: 15px;
     height: 45px;
 
-    background: #fff0f5;
+    background: #fff1f6;
 
     border-radius: 5px;
 
-    z-index: 3;
+    z-index: 4;
 }
 
 .candle1 {
-    left: 83px;
+    left: 90px;
 }
 
 .candle2 {
-    left: 123px;
+    left: 132px;
 }
 
 .candle3 {
-    left: 163px;
+    left: 174px;
 }
 
 .flame {
     position: absolute;
 
-    width: 15px;
+    width: 16px;
     height: 22px;
-
-    background: #ffb13b;
-
-    border-radius: 50% 50% 50% 50%;
 
     top: -22px;
 
-    animation: flame 0.5s infinite alternate;
+    background: #ffb13b;
+
+    border-radius: 50%;
+
+    animation: flame .5s infinite alternate;
 }
 
 @keyframes flame {
+
     from {
-        transform: scale(0.8);
+        transform: scale(.8);
     }
 
     to {
-        transform: scale(1.1);
+        transform: scale(1.15);
     }
 }
 
@@ -470,41 +935,52 @@ button.secondary {
 }
 
 #wishMessage {
+    color: var(--pink-light);
+
     margin-top: 15px;
-    color: var(--pink);
-    font-weight: 600;
 }
 
 
-/* ================= FINAL ================= */
+/* =========================================
+   FINAL PAGE
+========================================= */
 
 .final-page {
     background:
-        radial-gradient(circle at center,
-            #351827 0%,
-            #100b12 60%);
+        radial-gradient(
+            circle at center,
+            #3a192a 0%,
+            #180d15 40%,
+            #0e090d 75%
+        );
+}
+
+.final-content {
+    animation: finalAppear 1.2s ease;
+}
+
+@keyframes finalAppear {
+
+    from {
+        opacity: 0;
+        transform: scale(.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .final-heart {
     font-size: 70px;
 
-    animation: heartbeat 1.2s infinite;
-}
-
-@keyframes heartbeat {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.18);
-    }
+    animation:
+        heartbeat 1.2s infinite;
 }
 
 .final-message {
-    max-width: 600px;
+    max-width: 650px;
 
     margin: auto;
 
@@ -513,41 +989,71 @@ button.secondary {
     line-height: 1.8;
 }
 
+.final-divider {
+    width: 100px;
+
+    height: 1px;
+
+    background: #694052;
+
+    margin: 30px auto;
+}
+
 .nazar {
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
     gap: 18px;
 
-    margin-top: 35px;
-
     font-family: "Playfair Display", serif;
 
-    font-size: clamp(25px, 5vw, 45px);
+    font-size: clamp(30px, 6vw, 55px);
 
-    color: var(--light-pink);
+    letter-spacing: 3px;
 
-    letter-spacing: 4px;
+    color: var(--pink-light);
+
+    animation:
+        nazarGlow 2s infinite alternate;
 }
 
-.nazar span {
-    font-family: sans-serif;
+@keyframes nazarGlow {
+
+    from {
+        text-shadow:
+            0 0 5px rgba(255,120,168,.2);
+    }
+
+    to {
+        text-shadow:
+            0 0 30px rgba(255,120,168,.4);
+    }
 }
 
 .forever {
-    margin-top: 18px;
-
     color: var(--pink);
 
-    font-size: 14px;
+    margin-top: 18px;
+}
+
+.final-kisses {
+    font-size: 24px;
+
+    margin-top: 15px;
+
+    letter-spacing: 10px;
 }
 
 
-/* ================= FLOATING HEARTS ================= */
+/* =========================================
+   FLOATING HEARTS
+========================================= */
 
-.floating-hearts {
+.floating-hearts,
+.sparkle-container {
     position: fixed;
 
     inset: 0;
@@ -556,7 +1062,7 @@ button.secondary {
 
     overflow: hidden;
 
-    z-index: 10;
+    z-index: 100;
 }
 
 .heart {
@@ -564,55 +1070,106 @@ button.secondary {
 
     bottom: -40px;
 
-    animation: rise linear forwards;
+    opacity: 0;
 
-    opacity: 0.7;
+    animation:
+        rise linear forwards;
 }
 
 @keyframes rise {
 
-    from {
-        transform: translateY(0) rotate(0deg);
+    0% {
+        transform:
+            translateY(0)
+            rotate(0);
+
         opacity: 0;
     }
 
     20% {
-        opacity: 0.8;
+        opacity: .8;
     }
 
-    to {
-        transform: translateY(-110vh) rotate(360deg);
+    100% {
+        transform:
+            translateY(-110vh)
+            rotate(360deg);
+
         opacity: 0;
     }
 }
 
+.sparkle {
+    position: absolute;
 
-/* ================= MOBILE ================= */
+    animation:
+        sparkle 2s ease-out forwards;
+}
+
+@keyframes sparkle {
+
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
 
 @media (max-width: 700px) {
-
-    .cards {
-        grid-template-columns: 1fr;
-    }
-
-    h1 {
-        font-size: 48px;
-    }
-
-    h2 {
-        font-size: 34px;
-    }
 
     .page {
         padding: 18px;
     }
 
-    .card {
-        padding: 20px;
+    h1 {
+        font-size: 52px;
+    }
+
+    h2 {
+        font-size: 36px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .memory-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .letter {
+        padding: 25px;
     }
 
     .nazar {
         gap: 8px;
-        letter-spacing: 2px;
+
+        font-size: 30px;
+
+        letter-spacing: 1px;
+    }
+
+    .heart-choice {
+        gap: 10px;
+    }
+
+    .heart-choice button {
+        font-size: 30px;
+
+        padding: 18px;
     }
 }
