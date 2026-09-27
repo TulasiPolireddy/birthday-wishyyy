@@ -1,40 +1,70 @@
-/* ================= PAGE NAVIGATION ================= */
+/* =========================================
+   PAGE NAVIGATION
+========================================= */
 
 let currentPage = 1;
 
 function nextPage() {
 
-    const current = document.getElementById(`page${currentPage}`);
+    const current = document.getElementById(
+        `page${currentPage}`
+    );
 
     current.classList.remove("active");
 
     currentPage++;
 
-    const next = document.getElementById(`page${currentPage}`);
+    const next = document.getElementById(
+        `page${currentPage}`
+    );
 
     if (next) {
-        next.classList.add("active");
-    }
 
+        next.classList.add("active");
+
+        createSparkles();
+
+        if (currentPage === 11) {
+            createConfetti();
+        }
+    }
 }
 
 
-/* ================= FLOATING HEARTS ================= */
+/* =========================================
+   FLOATING HEARTS
+========================================= */
 
-const heartContainer = document.querySelector(".floating-hearts");
+const heartContainer =
+    document.querySelector(".floating-hearts");
 
-const hearts = ["❤️", "💕", "💗", "💖", "💋"];
+const heartSymbols = [
+    "❤️",
+    "💕",
+    "💗",
+    "💖",
+    "💓",
+    "💞",
+    "💋"
+];
 
 function createHeart() {
 
-    const heart = document.createElement("div");
+    const heart =
+        document.createElement("div");
 
     heart.className = "heart";
 
     heart.innerHTML =
-        hearts[Math.floor(Math.random() * hearts.length)];
+        heartSymbols[
+            Math.floor(
+                Math.random() *
+                heartSymbols.length
+            )
+        ];
 
-    heart.style.left = Math.random() * 100 + "%";
+    heart.style.left =
+        Math.random() * 100 + "%";
 
     heart.style.fontSize =
         Math.random() * 20 + 15 + "px";
@@ -49,10 +79,92 @@ function createHeart() {
     }, 10000);
 }
 
-setInterval(createHeart, 700);
+setInterval(createHeart, 650);
 
 
-/* ================= KISS BUTTON ================= */
+/* =========================================
+   SPARKLES
+========================================= */
+
+function createSparkles() {
+
+    const container =
+        document.querySelector(".sparkle-container");
+
+    for (let i = 0; i < 25; i++) {
+
+        const sparkle =
+            document.createElement("div");
+
+        sparkle.className = "sparkle";
+
+        sparkle.innerHTML = "✦";
+
+        sparkle.style.left =
+            Math.random() * 100 + "%";
+
+        sparkle.style.top =
+            Math.random() * 100 + "%";
+
+        sparkle.style.fontSize =
+            Math.random() * 15 + 8 + "px";
+
+        sparkle.style.color =
+            "#ffd5e3";
+
+        sparkle.style.animationDelay =
+            Math.random() * .8 + "s";
+
+        container.appendChild(sparkle);
+
+        setTimeout(() => {
+            sparkle.remove();
+        }, 3000);
+    }
+}
+
+
+/* =========================================
+   HEART GAME
+========================================= */
+
+let heartGameFinished = false;
+
+function chooseHeart(choice) {
+
+    if (heartGameFinished) return;
+
+    heartGameFinished = true;
+
+    const result =
+        document.getElementById("heartResult");
+
+    const messages = {
+
+        1:
+            "You found it! Apparently you have excellent boyfriend skills. 😂❤️",
+
+        2:
+            "Wrong one... but I'll allow it because you're cute. 😌💗",
+
+        3:
+            "You found the secret! The secret is... I love you. Obviously. 😂❤️"
+    };
+
+    result.innerHTML =
+        messages[choice];
+
+    document.getElementById(
+        "heartNext"
+    ).style.display = "inline-block";
+
+    createSparkles();
+}
+
+
+/* =========================================
+   KISS SERVICE
+========================================= */
 
 let kissCount = 0;
 
@@ -60,27 +172,81 @@ function sendKiss() {
 
     kissCount++;
 
-    document.getElementById("kissCount").textContent = kissCount;
+    document.getElementById(
+        "kissCount"
+    ).textContent = kissCount;
 
-    const kiss = document.createElement("div");
 
-    kiss.className = "kiss";
+    /*
+       MAIN KISS:
+       This appears immediately ABOVE
+       the button that was pressed.
+    */
+
+    const button =
+        document.getElementById("kissButton");
+
+    const kiss =
+        document.createElement("div");
+
+    kiss.className = "kiss-pop";
 
     kiss.innerHTML = "💋";
 
-    kiss.style.left =
-        Math.random() * 90 + "%";
+    button.parentElement.appendChild(kiss);
 
-    document.getElementById("kissArea").appendChild(kiss);
+
+    /*
+       Extra kisses fly around the screen
+    */
+
+    const area =
+        document.getElementById("kissArea");
+
+    for (let i = 0; i < 3; i++) {
+
+        const flyingKiss =
+            document.createElement("div");
+
+        flyingKiss.className =
+            "kiss-fly";
+
+        flyingKiss.innerHTML =
+            Math.random() > .5
+                ? "💋"
+                : "❤️";
+
+        flyingKiss.style.left =
+            Math.random() * 90 + "%";
+
+        flyingKiss.style.bottom =
+            Math.random() * 30 + "px";
+
+        flyingKiss.style.animationDelay =
+            Math.random() * .2 + "s";
+
+        area.appendChild(flyingKiss);
+
+        setTimeout(() => {
+            flyingKiss.remove();
+        }, 2000);
+    }
+
+
+    /*
+       Remove the main kiss after animation
+    */
 
     setTimeout(() => {
         kiss.remove();
-    }, 1500);
+    }, 1300);
 
 }
 
 
-/* ================= GIFT ================= */
+/* =========================================
+   GIFT
+========================================= */
 
 let giftOpened = false;
 
@@ -90,61 +256,105 @@ function openGift() {
 
     giftOpened = true;
 
-    const gift = document.querySelector(".gift");
+    const gift =
+        document.querySelector(".gift");
 
     gift.classList.add("open");
 
-    document.getElementById("giftMessage").innerHTML =
+    document.getElementById(
+        "giftMessage"
+    ).innerHTML =
         "Surprise! 🎁 Your actual gift is having me in your life. You're welcome. 😂❤️";
 
-    document.getElementById("giftButton").innerHTML =
-        "That was the gift 😌❤️";
+    document.getElementById(
+        "giftButton"
+    ).innerHTML =
+        "Gift successfully stolen 😌";
 
+    document.getElementById(
+        "giftNext"
+    ).style.display =
+        "inline-block";
+
+    createConfetti();
 }
 
 
-/* ================= CAKE ================= */
+/* =========================================
+   CAKE
+========================================= */
+
+let candlesBlown = false;
 
 function blowCandles() {
 
-    const flames = document.querySelectorAll(".flame");
+    if (candlesBlown) return;
+
+    candlesBlown = true;
+
+    const flames =
+        document.querySelectorAll(".flame");
 
     flames.forEach(flame => {
         flame.classList.add("off");
     });
 
-    document.getElementById("wishMessage").innerHTML =
-        "✨ Wish made! I hope every beautiful thing you're wishing for finds its way to you. ❤️";
+    document.getElementById(
+        "wishMessage"
+    ).innerHTML =
+        "✨ Wish made! May every beautiful thing you're hoping for find its way to you. ❤️";
+
+    document.getElementById(
+        "cakeNext"
+    ).style.display =
+        "inline-block";
 
     createConfetti();
-
 }
 
 
-/* ================= CONFETTI ================= */
+/* =========================================
+   CONFETTI
+========================================= */
 
 function createConfetti() {
 
-    const symbols = ["✨", "❤️", "🎉", "💕", "💋", "🥳"];
+    const symbols = [
+        "✨",
+        "❤️",
+        "🎉",
+        "💕",
+        "💋",
+        "🥳",
+        "🎊"
+    ];
 
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 70; i++) {
 
-        const confetti = document.createElement("div");
+        const confetti =
+            document.createElement("div");
 
         confetti.innerHTML =
-            symbols[Math.floor(Math.random() * symbols.length)];
+            symbols[
+                Math.floor(
+                    Math.random() *
+                    symbols.length
+                )
+            ];
 
-        confetti.style.position = "fixed";
+        confetti.style.position =
+            "fixed";
 
         confetti.style.left =
             Math.random() * 100 + "vw";
 
-        confetti.style.top = "-30px";
+        confetti.style.top =
+            "-30px";
 
         confetti.style.fontSize =
-            Math.random() * 20 + 15 + "px";
+            Math.random() * 20 + 14 + "px";
 
-        confetti.style.zIndex = "100";
+        confetti.style.zIndex = "300";
 
         confetti.style.transition =
             "transform 3s ease, opacity 3s ease";
@@ -154,7 +364,8 @@ function createConfetti() {
         setTimeout(() => {
 
             confetti.style.transform =
-                `translateY(110vh) rotate(${Math.random() * 720}deg)`;
+                `translateY(110vh)
+                 rotate(${Math.random() * 720}deg)`;
 
             confetti.style.opacity = "0";
 
@@ -162,29 +373,122 @@ function createConfetti() {
 
         setTimeout(() => {
             confetti.remove();
-        }, 3200);
-
+        }, 3300);
     }
-
 }
 
 
-/* ================= RESTART ================= */
+/* =========================================
+   MUSIC
+========================================= */
+
+let musicPlaying = false;
+
+function toggleMusic() {
+
+    const button =
+        document.getElementById(
+            "musicButton"
+        );
+
+    /*
+       Music isn't automatically included because
+       GitHub cannot magically provide a song file.
+
+       If you later add your own MP3, you can connect
+       it here.
+    */
+
+    musicPlaying = !musicPlaying;
+
+    button.innerHTML =
+        musicPlaying
+            ? "🔊"
+            : "🎵";
+}
+
+
+/* =========================================
+   RESTART
+========================================= */
 
 function restartApp() {
 
-    document
-        .getElementById(`page${currentPage}`)
-        .classList.remove("active");
+    const current =
+        document.getElementById(
+            `page${currentPage}`
+        );
+
+    current.classList.remove("active");
 
     currentPage = 1;
 
-    document
-        .getElementById("page1")
-        .classList.add("active");
+    document.getElementById(
+        "page1"
+    ).classList.add("active");
+
+
+    /*
+       Reset kiss counter
+    */
 
     kissCount = 0;
 
-    document.getElementById("kissCount").textContent = "0";
+    document.getElementById(
+        "kissCount"
+    ).textContent = "0";
+
+
+    /*
+       Reset gift
+    */
+
+    giftOpened = false;
+
+    const gift =
+        document.querySelector(".gift");
+
+    if (gift) {
+        gift.classList.remove("open");
+    }
+
+
+    /*
+       Reset cake
+    */
+
+    candlesBlown = false;
+
+    document.querySelectorAll(
+        ".flame"
+    ).forEach(flame => {
+
+        flame.classList.remove("off");
+
+    });
+
+
+    document.getElementById(
+        "wishMessage"
+    ).innerHTML = "";
+
+    document.getElementById(
+        "cakeNext"
+    ).style.display = "none";
+
+
+    /*
+       Reset heart game
+    */
+
+    heartGameFinished = false;
+
+    document.getElementById(
+        "heartResult"
+    ).innerHTML = "";
+
+    document.getElementById(
+        "heartNext"
+    ).style.display = "none";
 
 }
