@@ -1,207 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday! 🎂💖✨</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fredoka:wght@400;600;700&family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>For Tharun ❤️</title>
 
-  <!-- Confetti Library -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <!-- Classy fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- External Stylesheet -->
-  <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <!-- Background Floating Hearts -->
-  <div class="bg-hearts" id="hearts-bg"></div>
+    <!-- Floating hearts -->
+    <div class="floating-hearts"></div>
 
-  <div class="app-container">
+    <!-- ================= PAGE 1 ================= -->
 
-    <!-- 1. OPENING SCREEN -->
-    <div class="screen active" id="screen-1">
-      <span class="badge-tag">✨ A Sweet Surprise Awaits ✨</span>
-      <h1 class="title-magic">Hey <span id="display-name-1">Birthday Star</span>!</h1>
-      <p>Today is all about you! I built something super cute just to bring a big smile to your face.</p>
-      
-      <div class="gift-box" onclick="nextScreenWithConfetti()">🎁</div>
-      <br>
-      <button class="btn-cute" onclick="nextScreenWithConfetti()">
-        <span>Tap to Open Surprise</span> 🎉
-      </button>
-      <br>
-      <button class="btn-edit-float" onclick="openEditModal()">✍️ Click here to type your custom message</button>
-    </div>
+    <section class="page active" id="page1">
 
-    <!-- 2. OPEN YOUR SURPRISE -->
-    <div class="screen" id="screen-2">
-      <span class="badge-tag">🎁 Surprise Unlocked</span>
-      <h1 class="title-magic">Ta-Daaa! 🥳</h1>
-      <div style="font-size: 65px; margin: 15px 0;">🎉✨🎈</div>
-      <p>The party poppers went off because someone undeniably special was born on this day!</p>
-      <button class="btn-cute" onclick="nextScreen()">Let's Begin 🚀</button>
-      <div class="progress-bar"><div class="progress-fill" style="width: 22%;"></div></div>
-    </div>
+        <div class="content">
 
-    <!-- 3. HAPPY BIRTHDAY ANIMATION -->
-    <div class="screen" id="screen-3">
-      <span class="badge-tag">🎂 The Big Wish</span>
-      <div class="cake-hero">🎂</div>
-      <h1 class="title-magic">HAPPY BIRTHDAY!</h1>
-      <h2 class="title-cute" id="display-name-2">To the sweetest soul ever 💖</h2>
-      <p>May your special day be filled with lots of love, endless laughter, and your favorite treats!</p>
-      <div class="nav-buttons">
-        <button class="btn-nav-prev" onclick="prevScreen()">← Back</button>
-        <button class="btn-cute" onclick="nextScreen()">Read Message 💌</button>
-      </div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 33%;"></div></div>
-    </div>
+            <p class="small-text">A little something for someone special...</p>
 
-    <!-- 4. BIRTHDAY MESSAGE -->
-    <div class="screen" id="screen-4">
-      <span class="badge-tag">🎈 From My Heart</span>
-      <h1 class="title-cute">Dear <span id="display-name-3">Favorite Person</span>,</h1>
-      <p id="display-bday-msg" class="message-card-box">
-"I hope you know how much joy and warmth you bring into my life. Thank you for always being your genuine, adorable, and wonderful self. You deserve all the happiness the universe can offer!" 🌸✨
-      </p>
-      <div class="nav-buttons">
-        <button class="btn-nav-prev" onclick="prevScreen()">← Back</button>
-        <button class="btn-cute" onclick="nextScreen()">A Quick Question ❓</button>
-      </div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 44%;"></div></div>
-    </div>
+            <h1>
+                Hey Tharun
+                <span>❤️</span>
+            </h1>
 
-    <!-- 5. ARE YOU LOVING ME? (RUNAWAY YES + DUCK HELPER) -->
-    <div class="screen" id="screen-5">
-      <span class="badge-tag">🦆 Honest Answer Time 🦆</span>
-      <h1 class="title-magic">Are you loving me? 🥺💖</h1>
-      <p id="love-game-hint">Choose wisely... be 100% honest! 😉</p>
+            <p class="subtitle">
+                Today isn't just another day...
+                <br>
+                it's the day my favourite human was born. 🥹
+            </p>
 
-      <!-- Interactive Play Area -->
-      <div class="love-game-area" id="gameArea">
-        
-        <!-- Animated Duck Helper -->
-        <div class="duck-helper" id="duckHelper">
-          <div class="duck-bubble" id="duckBubble">Quack! It's all yours now, press it! 🥰</div>
-          <div class="duck-avatar">🦆</div>
+            <button onclick="nextPage()">
+                Open Your Surprise 🎁
+            </button>
+
         </div>
 
-        <!-- Buttons -->
-        <button class="btn-love btn-love-yes" id="btnYes" onmouseover="dodgeYesButton()" ontouchstart="dodgeYesButton(event)" onclick="handleYesClick()">
-          YES! 🥰
-        </button>
-        <button class="btn-love btn-love-no" id="btnNo" onclick="handleNoClick()">
-          No 🙈
-        </button>
-      </div>
+    </section>
 
-      <div class="nav-buttons" style="margin-top: 20px;">
-        <button class="btn-nav-prev" onclick="prevScreen()">← Back</button>
-        <button class="btn-cute" id="btn-after-love" style="display:none;" onclick="nextScreen()">What I Love 💗</button>
-      </div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 55%;"></div></div>
-    </div>
 
-    <!-- 6. THINGS I LOVE ABOUT YOU -->
-    <div class="screen" id="screen-6">
-      <span class="badge-tag">💗 Pure Appreciation</span>
-      <h1 class="title-magic">Reasons You're Special</h1>
-      <p style="font-size: 0.9rem;">(Tap the hearts to pop love!)</p>
-      <div class="love-tags">
-        <div class="love-pill" onclick="popTag(this)">Your infectious laugh ✨</div>
-        <div class="love-pill" onclick="popTag(this)">Your golden heart 💛</div>
-        <div class="love-pill" onclick="popTag(this)">Your comforting hugs 🤗</div>
-        <div class="love-pill" onclick="popTag(this)">Always listening 👂</div>
-        <div class="love-pill" onclick="popTag(this)">Your crazy dreams 🚀</div>
-        <div class="love-pill" onclick="popTag(this)">Just being YOU! 💖</div>
-      </div>
-      <div class="nav-buttons">
-        <button class="btn-nav-prev" onclick="prevScreen()">← Back</button>
-        <button class="btn-cute" onclick="nextScreen()">Blow Candles 🎂</button>
-      </div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 66%;"></div></div>
-    </div>
+    <!-- ================= PAGE 2 ================= -->
 
-    <!-- 7. BLOW THE CANDLES -->
-    <div class="screen" id="screen-7">
-      <span class="badge-tag">🎂 Make a Wish</span>
-      <h1 class="title-magic">Blow the Candles!</h1>
-      <p id="candle-text">✨ Make a wish and tap the cake to blow out the flames! ✨</p>
-      <div class="cake-container" onclick="blowCandles()">
-        <div class="candles">
-          <div class="candle"><div class="flame" id="flame1"></div></div>
-          <div class="candle"><div class="flame" id="flame2"></div></div>
-          <div class="candle"><div class="flame" id="flame3"></div></div>
+    <section class="page" id="page2">
+
+        <div class="content">
+
+            <div class="emoji-big">🎂</div>
+
+            <h2>Happy Birthday, Tharun! ❤️</h2>
+
+            <p class="message">
+
+                Happy Birthday to the person who somehow managed
+                to become one of the most important parts of my life. 🥹❤️
+
+                <br><br>
+
+                I hope this year brings you everything you've been
+                wishing for... except maybe a girlfriend who doesn't
+                annoy you. Because unfortunately, that one is already
+                taken. 😌😂
+
+                <br><br>
+
+                And yes...
+                you're stuck with me. 💋
+
+            </p>
+
+            <button onclick="nextPage()">Okay... there's more 👀</button>
+
         </div>
-        <div class="cake-frosting"></div>
-        <div class="cake-body"></div>
-      </div>
-      <div class="nav-buttons">
-        <button class="btn-nav-prev" onclick="prevScreen()">← Back</button>
-        <button class="btn-cute" id="btn-after-candles" style="display:none;" onclick="nextScreen()">Secret Letter 💌</button>
-      </div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 77%;"></div></div>
-    </div>
 
-    <!-- 8. SECRET MESSAGE -->
-    <div class="screen" id="screen-8">
-      <span class="badge-tag">💌 Top Secret</span>
-      <h1 class="title-magic">A Letter For You</h1>
-      <p>Tap the wax-sealed envelope to read the message:</p>
-      <div class="envelope-box" onclick="openEnvelope()">
-        <div style="font-size: 75px;" id="env-icon">✉️</div>
-      </div>
-      <div class="secret-letter" id="secret-letter-text"></div>
-      <div class="nav-buttons" style="margin-top: 20px;">
-        <button class="btn-nav-prev" onclick="prevScreen()">← Back</button>
-        <button class="btn-cute" id="btn-final" style="display:none;" onclick="celebrateGrandFinale()">Grand Finale 🎊</button>
-      </div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 88%;"></div></div>
-    </div>
+    </section>
 
-    <!-- 9. FINAL CONFETTI -->
-    <div class="screen" id="screen-9">
-      <span class="badge-tag">🎊 Celebrate Forever 🎊</span>
-      <h1 class="title-magic" style="font-size: 2.6rem;">HAPPY BIRTHDAY! 💖</h1>
-      <div style="font-size: 65px; margin: 12px 0;">👑✨🎂🎈🎁</div>
-      <p style="font-size: 1.15rem; font-weight: 600; color: #ff3377;">
-        May this year bring you endless laughter, peace, adventures, and all your dreams fulfilled!
-      </p>
-      <button class="btn-cute" onclick="replayAll()" style="background: linear-gradient(45deg, #a06cd5, #ff477e);">
-        <span>Replay From Start</span> 🔄
-      </button>
-      <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
-    </div>
 
-  </div>
+    <!-- ================= PAGE 3 ================= -->
 
-  <!-- Customizer Modal -->
-  <div class="custom-modal" id="editModal">
-    <div class="custom-modal-content">
-      <h2 class="title-cute" style="font-size: 1.8rem; text-align: center;">✍️ Write Your Messages</h2>
-      
-      <label><strong>1. Birthday Person's Name / Nickname:</strong></label>
-      <input type="text" id="inputName" placeholder="e.g. Sarah / Bestie / Sweetheart">
+    <section class="page" id="page3">
 
-      <label><strong>2. Birthday Message (Page 4):</strong></label>
-      <textarea id="inputMainMsg" rows="4" placeholder="Write your heartfelt birthday message here..."></textarea>
+        <div class="content">
 
-      <label><strong>3. Secret Letter Note (Page 8):</strong></label>
-      <textarea id="inputSecretMsg" rows="5" placeholder="Write your private secret letter here..."></textarea>
+            <p class="small-text">Important information 🚨</p>
 
-      <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px;">
-        <button class="btn-nav-prev" onclick="closeEditModal()">Cancel</button>
-        <button class="btn-cute" onclick="saveAndCopyLink()">💾 Save & Copy Share Link</button>
-      </div>
-    </div>
-  </div>
+            <h2>Reasons You're Stuck With Me 😂❤️</h2>
 
-  <!-- External Script -->
-  <script src="script.js"></script>
+            <div class="cards">
+
+                <div class="card">
+                    <span>01</span>
+                    <h3>Too late 😌</h3>
+                    <p>
+                        You've already gotten used to me.
+                        There is absolutely no escape now.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <span>02</span>
+                    <h3>I'm adorable. Obviously. 💅</h3>
+                    <p>
+                        This is not an opinion.
+                        This is an internationally accepted fact.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <span>03</span>
+                    <h3>You love me ❤️</h3>
+                    <p>
+                        Don't even try to deny it.
+                        We both know the truth. 😂
+                    </p>
+                </div>
+
+            </div>
+
+            <button onclick="nextPage()">Fine... tell me something sweet 🥹</button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= PAGE 4 ================= -->
+
+    <section class="page" id="page4">
+
+        <div class="content">
+
+            <p class="small-text">But seriously...</p>
+
+            <h2>Things I Love About You ❤️</h2>
+
+            <div class="love-list">
+
+                <div>♡ The way you make me smile without trying.</div>
+
+                <div>♡ The comfort I feel when I'm with you.</div>
+
+                <div>♡ Your stupid jokes that somehow make me laugh. 😂</div>
+
+                <div>♡ The little things you do that you probably don't even notice.</div>
+
+                <div>♡ And most importantly... just you. 🥹❤️</div>
+
+            </div>
+
+            <p class="bottom-note">
+                You're genuinely special to me, Tharun. 💋
+            </p>
+
+            <button onclick="nextPage()">Send him some kisses 💋</button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= PAGE 5 ================= -->
+
+    <section class="page" id="page5">
+
+        <div class="content">
+
+            <div class="emoji-big">💋</div>
+
+            <h2>Kiss Delivery Service</h2>
+
+            <p>
+                Your birthday package has arrived. 📦
+                <br>
+                Click below to deliver kisses.
+            </p>
+
+            <div id="kissArea"></div>
+
+            <button onclick="sendKiss()">
+                Send Kiss 💋
+            </button>
+
+            <p class="kiss-count">
+                Kisses delivered: <span id="kissCount">0</span>
+            </p>
+
+            <button class="secondary" onclick="nextPage()">
+                Enough kisses... maybe 👀
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= PAGE 6 ================= -->
+
+    <section class="page" id="page6">
+
+        <div class="content">
+
+            <p class="small-text">One last surprise...</p>
+
+            <h2>Your Birthday Gift 🎁</h2>
+
+            <div class="gift" onclick="openGift()">
+
+                <div class="gift-lid"></div>
+
+                <div class="gift-box">
+                    <div class="ribbon"></div>
+                </div>
+
+            </div>
+
+            <p id="giftMessage">
+                Don't just stare at it. Open it! 😂
+            </p>
+
+            <button id="giftButton" onclick="openGift()">
+                Open Gift 🎁
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= PAGE 7 ================= -->
+
+    <section class="page" id="page7">
+
+        <div class="content">
+
+            <p class="small-text">Make a wish, birthday boy ✨</p>
+
+            <h2>Birthday Cake 🎂</h2>
+
+            <div class="cake">
+
+                <div class="candle candle1">
+                    <div class="flame"></div>
+                </div>
+
+                <div class="candle candle2">
+                    <div class="flame"></div>
+                </div>
+
+                <div class="candle candle3">
+                    <div class="flame"></div>
+                </div>
+
+                <div class="cake-top"></div>
+                <div class="cake-middle"></div>
+                <div class="cake-bottom"></div>
+
+            </div>
+
+            <button onclick="blowCandles()">
+                Blow the Candles 🎂
+            </button>
+
+            <p id="wishMessage"></p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FINAL PAGE ================= -->
+
+    <section class="page final-page" id="page8">
+
+        <div class="content">
+
+            <div class="final-heart">❤️</div>
+
+            <h1>Happy Birthday<br>Tharun</h1>
+
+            <p class="final-message">
+
+                I don't know what the future has planned for us,
+
+                <br><br>
+
+                but I do know that I'm really grateful
+                that you're a part of my life right now. ❤️
+
+                <br><br>
+
+                Keep smiling.
+                Keep being you.
+                Keep annoying me.
+
+                <br><br>
+
+                And please remember...
+
+                <br>
+
+                you are loved more than you probably realise. 🥹💋
+
+            </p>
+
+            <div class="nazar">
+
+                <span>🧿</span>
+
+                <strong>NO NAZAR</strong>
+
+                <span>🧿</span>
+
+            </div>
+
+            <p class="forever">
+                Always rooting for you. ❤️
+            </p>
+
+            <button onclick="restartApp()">
+                Start Again 🔄
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
 </body>
 </html>
