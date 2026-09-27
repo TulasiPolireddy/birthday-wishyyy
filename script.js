@@ -1,100 +1,100 @@
 /* =========================================
-   PAGE NAVIGATION
-========================================= */
+   BIRTHDAY WISH APP — THARUN ❤️
+   ========================================= */
 
 let currentPage = 1;
+let kissCount = 0;
+
+
+/* =========================================
+   PAGE NAVIGATION
+   ========================================= */
 
 function nextPage() {
 
-    const current = document.getElementById(
-        `page${currentPage}`
-    );
+    // Remove current page
+    const current = document.getElementById(`page${currentPage}`);
 
-    current.classList.remove("active");
+    if (current) {
+        current.classList.remove("active");
+    }
 
+    // Move to next page
     currentPage++;
 
-    const next = document.getElementById(
-        `page${currentPage}`
-    );
+    // Page 6 was deleted, so skip it
+    if (currentPage === 6) {
+        currentPage = 7;
+    }
+
+    // Show next page
+    const next = document.getElementById(`page${currentPage}`);
 
     if (next) {
-
         next.classList.add("active");
+    }
 
-        createSparkles();
+    // Add sparkle effect
+    createSparkles();
 
-        if (currentPage === 11) {
-            createConfetti();
-        }
+    // Confetti on final page
+    if (currentPage === 11) {
+        createConfetti();
     }
 }
 
 
 /* =========================================
    FLOATING HEARTS
-========================================= */
+   ========================================= */
 
-const heartContainer =
-    document.querySelector(".floating-hearts");
+function createFloatingHeart() {
 
-const heartSymbols = [
-    "❤️",
-    "💕",
-    "💗",
-    "💖",
-    "💓",
-    "💞",
-    "💋"
-];
+    const container = document.querySelector(".floating-hearts");
 
-function createHeart() {
+    if (!container) return;
 
-    const heart =
-        document.createElement("div");
+    const heart = document.createElement("div");
 
-    heart.className = "heart";
+    heart.className = "floating-heart";
+
+    const hearts = ["❤️", "💗", "💖", "💕", "💓"];
 
     heart.innerHTML =
-        heartSymbols[
-            Math.floor(
-                Math.random() *
-                heartSymbols.length
-            )
-        ];
+        hearts[Math.floor(Math.random() * hearts.length)];
 
-    heart.style.left =
-        Math.random() * 100 + "%";
-
-    heart.style.fontSize =
-        Math.random() * 20 + 15 + "px";
+    heart.style.left = Math.random() * 100 + "%";
 
     heart.style.animationDuration =
-        Math.random() * 5 + 5 + "s";
+        (5 + Math.random() * 5) + "s";
 
-    heartContainer.appendChild(heart);
+    heart.style.fontSize =
+        (12 + Math.random() * 20) + "px";
+
+    container.appendChild(heart);
 
     setTimeout(() => {
         heart.remove();
     }, 10000);
 }
 
-setInterval(createHeart, 650);
+setInterval(createFloatingHeart, 650);
 
 
 /* =========================================
    SPARKLES
-========================================= */
+   ========================================= */
 
 function createSparkles() {
 
     const container =
         document.querySelector(".sparkle-container");
 
-    for (let i = 0; i < 25; i++) {
+    if (!container) return;
 
-        const sparkle =
-            document.createElement("div");
+    for (let i = 0; i < 12; i++) {
+
+        const sparkle = document.createElement("div");
 
         sparkle.className = "sparkle";
 
@@ -106,85 +106,80 @@ function createSparkles() {
         sparkle.style.top =
             Math.random() * 100 + "%";
 
-        sparkle.style.fontSize =
-            Math.random() * 15 + 8 + "px";
-
-        sparkle.style.color =
-            "#ffd5e3";
-
         sparkle.style.animationDelay =
-            Math.random() * .8 + "s";
+            Math.random() * 0.5 + "s";
 
         container.appendChild(sparkle);
 
         setTimeout(() => {
             sparkle.remove();
-        }, 3000);
+        }, 1500);
     }
 }
 
 
 /* =========================================
-   HEART GAME
-========================================= */
+   HEART MINI GAME
+   ========================================= */
 
-let heartGameFinished = false;
+const messages = {
+
+    1:
+        "You found it! Apparently you have excellent boyfriend skills. 😂❤️",
+
+    2:
+        "Wrong one... but I'll allow it because you're cute. 😌💗",
+
+    3:
+        "You found the secret! The secret is... I love you. Obviously. 😂❤️"
+
+};
+
 
 function chooseHeart(choice) {
-
-    if (heartGameFinished) return;
-
-    heartGameFinished = true;
 
     const result =
         document.getElementById("heartResult");
 
-    const messages = {
+    const nextButton =
+        document.getElementById("heartNext");
 
-        1:
-            "You found it! Apparently you have excellent boyfriend skills. 😂❤️",
-
-        2:
-            "Wrong one... but I'll allow it because you're cute. 😌💗",
-
-        3:
-            "You found the secret! The secret is... I love you. Obviously. 😂❤️"
-    };
+    if (!result || !nextButton) return;
 
     result.innerHTML =
         messages[choice];
 
-    document.getElementById(
-        "heartNext"
-    ).style.display = "inline-block";
+    nextButton.style.display =
+        "inline-block";
 
     createSparkles();
 }
 
 
 /* =========================================
-   KISS SERVICE
-========================================= */
-
-let kissCount = 0;
+   KISS DELIVERY 💋
+   ========================================= */
 
 function sendKiss() {
 
     kissCount++;
 
-    document.getElementById(
-        "kissCount"
-    ).textContent = kissCount;
+    const count =
+        document.getElementById("kissCount");
 
-
-    /*
-       MAIN KISS:
-       This appears immediately ABOVE
-       the button that was pressed.
-    */
+    if (count) {
+        count.textContent = kissCount;
+    }
 
     const button =
         document.getElementById("kissButton");
+
+    if (!button) return;
+
+    /*
+       Kiss that pops directly above
+       the button that was pressed
+    */
 
     const kiss =
         document.createElement("div");
@@ -196,59 +191,58 @@ function sendKiss() {
     button.parentElement.appendChild(kiss);
 
 
-    /*
-       Extra kisses fly around the screen
-    */
+    /* Extra flying kisses */
 
     const area =
         document.getElementById("kissArea");
 
-    for (let i = 0; i < 3; i++) {
+    if (area) {
 
-        const flyingKiss =
-            document.createElement("div");
+        for (let i = 0; i < 3; i++) {
 
-        flyingKiss.className =
-            "kiss-fly";
+            const flyingKiss =
+                document.createElement("div");
 
-        flyingKiss.innerHTML =
-            Math.random() > .5
-                ? "💋"
-                : "❤️";
+            flyingKiss.className =
+                "kiss-fly";
 
-        flyingKiss.style.left =
-            Math.random() * 90 + "%";
+            flyingKiss.innerHTML =
+                Math.random() > 0.5
+                    ? "💋"
+                    : "❤️";
 
-        flyingKiss.style.bottom =
-            Math.random() * 30 + "px";
+            flyingKiss.style.left =
+                Math.random() * 90 + "%";
 
-        flyingKiss.style.animationDelay =
-            Math.random() * .2 + "s";
+            flyingKiss.style.bottom =
+                Math.random() * 30 + "px";
 
-        area.appendChild(flyingKiss);
+            flyingKiss.style.animationDelay =
+                Math.random() * 0.2 + "s";
 
-        setTimeout(() => {
-            flyingKiss.remove();
-        }, 2000);
+            area.appendChild(flyingKiss);
+
+            setTimeout(() => {
+                flyingKiss.remove();
+            }, 2000);
+        }
     }
 
 
-    /*
-       Remove the main kiss after animation
-    */
+    /* Remove main kiss */
 
     setTimeout(() => {
         kiss.remove();
     }, 1300);
-
 }
 
 
 /* =========================================
-   GIFT
-========================================= */
+   GIFT BOX 🎁
+   ========================================= */
 
 let giftOpened = false;
+
 
 function openGift() {
 
@@ -259,32 +253,44 @@ function openGift() {
     const gift =
         document.querySelector(".gift");
 
-    gift.classList.add("open");
+    const message =
+        document.getElementById("giftMessage");
 
-    document.getElementById(
-        "giftMessage"
-    ).innerHTML =
-        "Surprise! 🎁 Your actual gift is having me in your life. You're welcome. 😂❤️";
+    const giftButton =
+        document.getElementById("giftButton");
 
-    document.getElementById(
-        "giftButton"
-    ).innerHTML =
-        "Gift successfully stolen 😌";
+    const nextButton =
+        document.getElementById("giftNext");
 
-    document.getElementById(
-        "giftNext"
-    ).style.display =
-        "inline-block";
+
+    if (gift) {
+        gift.classList.add("opened");
+    }
+
+    if (message) {
+
+        message.innerHTML =
+            "Surprise! 🎁 You thought I'd actually let your birthday pass without one? 😂❤️";
+    }
+
+    if (giftButton) {
+        giftButton.style.display = "none";
+    }
+
+    if (nextButton) {
+        nextButton.style.display = "inline-block";
+    }
 
     createConfetti();
 }
 
 
 /* =========================================
-   CAKE
-========================================= */
+   BIRTHDAY CAKE 🎂
+   ========================================= */
 
 let candlesBlown = false;
+
 
 function blowCandles() {
 
@@ -292,156 +298,141 @@ function blowCandles() {
 
     candlesBlown = true;
 
+
     const flames =
         document.querySelectorAll(".flame");
 
     flames.forEach(flame => {
-        flame.classList.add("off");
+
+        flame.style.opacity = "0";
+
+        flame.style.transform =
+            "scale(0)";
+
     });
 
-    document.getElementById(
-        "wishMessage"
-    ).innerHTML =
-        "✨ Wish made! May every beautiful thing you're hoping for find its way to you. ❤️";
 
-    document.getElementById(
-        "cakeNext"
-    ).style.display =
-        "inline-block";
+    const wish =
+        document.getElementById("wishMessage");
+
+    if (wish) {
+
+        wish.innerHTML =
+            "Make your biggest wish... ✨ And yes, I hope I am part of it. 😂❤️";
+    }
+
+
+    const nextButton =
+        document.getElementById("cakeNext");
+
+    if (nextButton) {
+        nextButton.style.display = "inline-block";
+    }
 
     createConfetti();
 }
 
 
 /* =========================================
-   CONFETTI
-========================================= */
+   CONFETTI 🎉
+   ========================================= */
 
 function createConfetti() {
 
-    const symbols = [
-        "✨",
-        "❤️",
-        "🎉",
-        "💕",
-        "💋",
-        "🥳",
-        "🎊"
-    ];
+    const pieces = 80;
 
-    for (let i = 0; i < 70; i++) {
+    for (let i = 0; i < pieces; i++) {
 
         const confetti =
             document.createElement("div");
 
-        confetti.innerHTML =
-            symbols[
-                Math.floor(
-                    Math.random() *
-                    symbols.length
-                )
-            ];
+        confetti.className =
+            "confetti";
 
-        confetti.style.position =
-            "fixed";
+        confetti.innerHTML =
+            Math.random() > 0.5
+                ? "❤️"
+                : "✦";
 
         confetti.style.left =
             Math.random() * 100 + "vw";
 
-        confetti.style.top =
-            "-30px";
+        confetti.style.animationDuration =
+            (2 + Math.random() * 3) + "s";
 
-        confetti.style.fontSize =
-            Math.random() * 20 + 14 + "px";
-
-        confetti.style.zIndex = "300";
-
-        confetti.style.transition =
-            "transform 3s ease, opacity 3s ease";
+        confetti.style.animationDelay =
+            Math.random() * 0.5 + "s";
 
         document.body.appendChild(confetti);
 
         setTimeout(() => {
-
-            confetti.style.transform =
-                `translateY(110vh)
-                 rotate(${Math.random() * 720}deg)`;
-
-            confetti.style.opacity = "0";
-
-        }, 50);
-
-        setTimeout(() => {
             confetti.remove();
-        }, 3300);
+        }, 5000);
     }
 }
 
 
 /* =========================================
-   MUSIC
-========================================= */
-
-let musicPlaying = false;
+   MUSIC BUTTON 🎵
+   ========================================= */
 
 function toggleMusic() {
 
     const button =
-        document.getElementById(
-            "musicButton"
-        );
+        document.getElementById("musicButton");
 
-    /*
-       Music isn't automatically included because
-       GitHub cannot magically provide a song file.
+    if (!button) return;
 
-       If you later add your own MP3, you can connect
-       it here.
-    */
+    if (button.innerHTML.includes("🎵")) {
 
-    musicPlaying = !musicPlaying;
+        button.innerHTML = "🔊";
 
-    button.innerHTML =
-        musicPlaying
-            ? "🔊"
-            : "🎵";
+    } else {
+
+        button.innerHTML = "🎵";
+    }
 }
 
 
 /* =========================================
-   RESTART
-========================================= */
+   RESTART APP 🔄
+   ========================================= */
 
 function restartApp() {
 
-    const current =
-        document.getElementById(
-            `page${currentPage}`
-        );
+    /* Reset page */
 
-    current.classList.remove("active");
+    document.querySelectorAll(".page")
+        .forEach(page => {
+
+            page.classList.remove("active");
+
+        });
+
 
     currentPage = 1;
 
-    document.getElementById(
-        "page1"
-    ).classList.add("active");
+    const firstPage =
+        document.getElementById("page1");
+
+    if (firstPage) {
+        firstPage.classList.add("active");
+    }
 
 
-    /*
-       Reset kiss counter
-    */
+    /* Reset kisses */
 
     kissCount = 0;
 
-    document.getElementById(
-        "kissCount"
-    ).textContent = "0";
+    const kissCounter =
+        document.getElementById("kissCount");
+
+    if (kissCounter) {
+        kissCounter.textContent = "0";
+    }
 
 
-    /*
-       Reset gift
-    */
+    /* Reset gift */
 
     giftOpened = false;
 
@@ -449,46 +440,93 @@ function restartApp() {
         document.querySelector(".gift");
 
     if (gift) {
-        gift.classList.remove("open");
+        gift.classList.remove("opened");
     }
 
 
-    /*
-       Reset cake
-    */
+    const giftMessage =
+        document.getElementById("giftMessage");
+
+    if (giftMessage) {
+
+        giftMessage.innerHTML =
+            "Go on... click the suspiciously cute box. 😂";
+    }
+
+
+    const giftButton =
+        document.getElementById("giftButton");
+
+    const giftNext =
+        document.getElementById("giftNext");
+
+    if (giftButton) {
+        giftButton.style.display = "inline-block";
+    }
+
+    if (giftNext) {
+        giftNext.style.display = "none";
+    }
+
+
+    /* Reset candles */
 
     candlesBlown = false;
 
-    document.querySelectorAll(
-        ".flame"
-    ).forEach(flame => {
+    document.querySelectorAll(".flame")
+        .forEach(flame => {
 
-        flame.classList.remove("off");
+            flame.style.opacity = "1";
 
-    });
+            flame.style.transform =
+                "scale(1)";
 
-
-    document.getElementById(
-        "wishMessage"
-    ).innerHTML = "";
-
-    document.getElementById(
-        "cakeNext"
-    ).style.display = "none";
+        });
 
 
-    /*
-       Reset heart game
-    */
+    const wish =
+        document.getElementById("wishMessage");
 
-    heartGameFinished = false;
+    if (wish) {
+        wish.innerHTML = "";
+    }
 
-    document.getElementById(
-        "heartResult"
-    ).innerHTML = "";
 
-    document.getElementById(
-        "heartNext"
-    ).style.display = "none";
+    const cakeNext =
+        document.getElementById("cakeNext");
 
+    if (cakeNext) {
+        cakeNext.style.display = "none";
+    }
+
+
+    /* Reset heart game */
+
+    const heartResult =
+        document.getElementById("heartResult");
+
+    const heartNext =
+        document.getElementById("heartNext");
+
+    if (heartResult) {
+        heartResult.innerHTML = "";
+    }
+
+    if (heartNext) {
+        heartNext.style.display = "none";
+    }
+
+
+    createSparkles();
 }
+
+
+/* =========================================
+   INITIAL EFFECT
+   ========================================= */
+
+window.addEventListener("load", () => {
+
+    createSparkles();
+
+});
